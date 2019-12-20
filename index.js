@@ -1,10 +1,22 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors')
+const helmet = require('helmet')
+const movieList = require('./movieList.json')
+
+
 
 const app = express();
 
 app.use(morgan('dev'));
+app.use(cors())
+app.use(helmet())
 
-app.listen(8000, () => {
-    console.log('Server is running on port 8000');
-});
+function handleMovieRequest(req, res){
+    res.send(movieList)
+}
+
+app.get('/movie',handleMovieRequest)
+
+
+module.exports = app;
